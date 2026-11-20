@@ -1,0 +1,54 @@
+{
+  "name": "@reactivecore/client",
+  "version": "0.2.0-alpha.5",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.2",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0",
+    "vue": "^3.5.0"
+  },
+  "license": "MIT",
+  "description": "TypeScript SDK with React and Vue integrations for ReactiveCore",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/herimalala-ranaivoarisoa-rivomanana/reactivecore-sdk.git"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "vue": "^3.3.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
