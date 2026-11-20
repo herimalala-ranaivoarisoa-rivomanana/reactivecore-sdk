@@ -399,28 +399,3 @@ IndexedDB keeps the queued intent across reloads. This integration verifies the 
 | Browser blocks the request with CORS | Match the exact browser origin in `RC_CORS_ORIGINS` and restart the API. |
 | The first snapshot arrives but later changes do not | Run a one-off query and check the worker, Redis and that both clients use the same tenant. |
 | IndexedDB is unavailable | Run the queue in a browser Client Component or mounted Vue component. Use HTTPS or localhost. |
-
-## Publish an alpha to npm
-
-The npm package name is `reactivecore-client`. Publish the first version from a workstation authenticated with npm. The package uses an unscoped name, so its import path contains only the product name.
-
-```sh
-npm ci
-npm test
-npm login --registry=https://registry.npmjs.org/
-npm publish --access public --tag next
-```
-
-For later alphas, configure a Trusted Publisher in the package's npm settings with the following values.
-
-| Setting | Value |
-| --- | --- |
-| Provider | GitHub Actions |
-| Organization or user | `herimalala-ranaivoarisoa-rivomanana` |
-| Repository | `reactivecore-sdk` |
-| Workflow filename | `publish.yml` |
-| Environment | Leave blank |
-
-Bump the version and update the lockfile before committing. Then push a tag that matches the new version, such as `v0.2.0-alpha.6`. The workflow tests the SDK and publishes the tag version to npm's `next` channel using GitHub's identity. Use a newer version than the one you published manually for the first automated publication. [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/)
-
-Once the package is published, install the alpha with `npm install reactivecore-client@next`, `pnpm add reactivecore-client@next`, or `yarn add reactivecore-client@next`.
