@@ -76,3 +76,28 @@ const state = useQuery((signal) => props.client.subscribe('items.list', {}, sign
 ## Send mutations and enable offline writes
 
 Call the generated client's `mutate(name, args, key)` to send an online mutation. Generate the key once and reuse it if the result is uncertain. For offline writes, use `OfflineQueue` and the IndexedDB store from `@reactivecore/client`. Scope persistence by project, environment, tenant and user, then connect the queue's pending, confirmed and conflict states to your interface. [Offline mutation walkthrough](https://github.com/herimalala-ranaivoarisoa-rivomanana/reactivecore-multidb#add-offline-writes-to-a-frontend)
+
+## Publish an alpha to npm
+
+The npm package name is `@reactivecore/client`. Publication requires an npm account with publish rights in the `reactivecore` scope. If the package is absent from the registry, create or obtain access to that scope and bootstrap the first version from an authenticated workstation.
+
+```sh
+npm ci
+npm test
+npm login --registry=https://registry.npmjs.org/
+npm publish --access public --tag next
+```
+
+For later alphas, configure a Trusted Publisher in the package's npm settings with the following values.
+
+| Setting | Value |
+| --- | --- |
+| Provider | GitHub Actions |
+| Organization or user | `herimalala-ranaivoarisoa-rivomanana` |
+| Repository | `reactivecore-sdk` |
+| Workflow filename | `publish.yml` |
+| Environment | Leave blank |
+
+Bump the version and update the lockfile before committing. Then push a tag that matches the new version, such as `v0.2.0-alpha.6`. The workflow tests the SDK and publishes the tag version to npm's `next` channel using GitHub's identity. Use a newer version than the one you published manually for the first automated publication. [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/)
+
+Once the package is published, install the alpha with `npm install @reactivecore/client@next`, `pnpm add @reactivecore/client@next`, or `yarn add @reactivecore/client@next`.
