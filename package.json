@@ -1,5 +1,5 @@
 {
-  "name": "@herimalala/reactivecore-client",
+  "name": "reactivecore-client",
   "version": "0.2.0-alpha.5",
   "type": "module",
   "files": [

@@ -15,14 +15,14 @@ npm pack
 From your existing frontend root, install the archive. Replace the path with the location printed by `npm pack`.
 
 ```sh
-npm install /path/to/herimalala-reactivecore-client-0.2.0-alpha.5.tgz
+npm install /path/to/reactivecore-client-0.2.0-alpha.5.tgz
 ```
 
 Install the React or Vue runtime through your app as usual. The optional peer dependencies allow the core SDK to work in plain TypeScript.
 
 ## 2. Connect your frontend to the API
 
-In your backend workspace, run its `npm run project -- codegen /path/to/backend-project @herimalala/reactivecore-client` command. For an older backend CLI that only accepts the project path, regenerate normally and update the generated import to `@herimalala/reactivecore-client` after each generation. Copy the generated `client.ts` to your frontend as `reactivecore-client.ts`. The generated functions use the names, arguments and results declared by your project.
+In your backend workspace, run its `npm run project -- codegen /path/to/backend-project reactivecore-client` command. For an older backend CLI that only accepts the project path, regenerate normally and update the generated import to `reactivecore-client` after each generation. Copy the generated `client.ts` to your frontend as `reactivecore-client.ts`. The generated functions use the names, arguments and results declared by your project.
 
 Create the client with your API origin and a function that retrieves the current access token from your authentication layer. Match your backend's allowed frontend origin. For a local backend walkthrough, follow the JWT steps in the backend README. [Backend setup and development token](https://github.com/herimalala-ranaivoarisoa-rivomanana/reactivecore-multidb#6-sign-a-local-development-token-and-query-the-api)
 
@@ -34,7 +34,7 @@ Mount this component after sign-in. Pass a client created with the generated `cr
 'use client';
 
 import { useCallback } from 'react';
-import { useQuery } from '@herimalala/reactivecore-client/react';
+import { useQuery } from 'reactivecore-client/react';
 import type { createClient } from './reactivecore-client';
 
 export function LiveItems({ client }: { client: ReturnType<typeof createClient> }) {
@@ -57,7 +57,7 @@ Mount the component after sign-in. In Nuxt, create the client inside the browser
 
 ```vue
 <script setup lang="ts">
-import { useQuery } from '@herimalala/reactivecore-client/vue';
+import { useQuery } from 'reactivecore-client/vue';
 import type { createClient } from './reactivecore-client';
 
 const props = defineProps<{ client: ReturnType<typeof createClient> }>();
@@ -75,11 +75,11 @@ const state = useQuery((signal) => props.client.subscribe('items.list', {}, sign
 
 ## Send mutations and enable offline writes
 
-Call the generated client's `mutate(name, args, key)` to send an online mutation. Generate the key once and reuse it if the result is uncertain. For offline writes, use `OfflineQueue` and the IndexedDB store from `@herimalala/reactivecore-client`. Scope persistence by project, environment, tenant and user, then connect the queue's pending, confirmed and conflict states to your interface. [Offline mutation walkthrough](https://github.com/herimalala-ranaivoarisoa-rivomanana/reactivecore-multidb#add-offline-writes-to-a-frontend)
+Call the generated client's `mutate(name, args, key)` to send an online mutation. Generate the key once and reuse it if the result is uncertain. For offline writes, use `OfflineQueue` and the IndexedDB store from `reactivecore-client`. Scope persistence by project, environment, tenant and user, then connect the queue's pending, confirmed and conflict states to your interface. [Offline mutation walkthrough](https://github.com/herimalala-ranaivoarisoa-rivomanana/reactivecore-multidb#add-offline-writes-to-a-frontend)
 
 ## Publish an alpha to npm
 
-The npm package name is `@herimalala/reactivecore-client`. Publish the first version from a workstation authenticated as the npm owner of the `herimalala` scope.
+The npm package name is `reactivecore-client`. Publish the first version from a workstation authenticated with npm. The package uses an unscoped name, so its import path contains only the product name.
 
 ```sh
 npm ci
@@ -100,4 +100,4 @@ For later alphas, configure a Trusted Publisher in the package's npm settings wi
 
 Bump the version and update the lockfile before committing. Then push a tag that matches the new version, such as `v0.2.0-alpha.6`. The workflow tests the SDK and publishes the tag version to npm's `next` channel using GitHub's identity. Use a newer version than the one you published manually for the first automated publication. [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/)
 
-Once the package is published, install the alpha with `npm install @herimalala/reactivecore-client@next`, `pnpm add @herimalala/reactivecore-client@next`, or `yarn add @herimalala/reactivecore-client@next`.
+Once the package is published, install the alpha with `npm install reactivecore-client@next`, `pnpm add reactivecore-client@next`, or `yarn add reactivecore-client@next`.
